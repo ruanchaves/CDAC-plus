@@ -279,6 +279,7 @@ for _ in trange(int(num_train_epochs), desc="Epoch"):
     l = 0.455 + eta*0.1
     if u < l:
         break
+        
 results_all.update({'CDAC': results})
 print(results, label_unknown)
 
@@ -442,6 +443,23 @@ for batch in tqdm(test_dataloader, desc="Extracting probabilities Q"):
 q_all = np.vstack(qs)
 y_pred = q_all.argmax(1)
 y_true = test_label_ids
+
+### 
+# <!-- RUAN
+###
+
+with open('q_all.pkl','wb') as f:
+    pickle.dump(q_all, f)
+   
+with open('y_pred.pkl','wb') as f:
+    pickle.dump(y_pred, f)
+  
+with open('y_true.pkl','wb') as f:
+    pickle.dump(y_true, f)
+
+###
+# RUAN -- !>
+###
 
 results = clustering_score(y_true, y_pred)
 results_all.update({'CDAC+': results})
